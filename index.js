@@ -1,14 +1,14 @@
 require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
-const usersRouter = require('./routers/users');
+const playersRouter = require('./routers/players');
 const authRouter = require('./routers/auth');
 
 const app = express();
 const port = process.env.PORT || 4001;
 
 app.use(bodyParser.json())
-app.use('/users', usersRouter)
+app.use('/', playersRouter)
 app.use('/auth', authRouter)
 
 app.get('/', (req, res) => {

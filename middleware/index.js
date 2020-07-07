@@ -6,17 +6,31 @@ const logger = (req, res, next) => {
 }
 
 const authenticate = (req, res, next) => {
-  const header = req.headers['authorization'] || ''
-  const [ bearer, token ] = header.split(' ')
+  const bearerHeader = req.headers['authorization'];
 
-  try {
-    const decoded = jwt.verify(token, 'secret')
-    req.user = decoded
-    next()
-  } catch(err) {
-    res.sendStatus(401)
+  if (typeof bearerHeader !== 'undefined') {
+    const bearer = bearerHeader.split(" ");
+
+    const bearerToken = bearer[1];
+
+    req.token = bearerToken;
+
+    next();
+  } else {
+    res.sendStatus(403);
   }
 }
+//   const header = req.headers['authorization'] || ''
+//   const [ bearer, token ] = header.split(' ')
+
+//   try {
+//     const decoded = jwt.verify(token, 'secret')
+//     req.user = decoded
+//     next()
+//   } catch(err) {
+//     res.sendStatus(401)
+//   }
+// }
 
 module.exports = {
   logger,

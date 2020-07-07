@@ -5,10 +5,10 @@ const router = express.Router()
 
 router.get('/players', playersController.getAllPlayers)
 
-router.get('/players:id', playersController.getPlayerById)
+router.get('/players/:id', playersController.getPlayerById)
 
 router.post('/players', authenticate, playersController.createPlayer)
 
-router.delete('/players:username', authenticate, playersController.deletePlayerByUsername)
+router.delete('/players/:username', authenticate, playersController.deletePlayerByUsername)
 
 module.exports = router;

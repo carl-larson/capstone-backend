@@ -28,12 +28,12 @@ const signup = (req, res) => {
 const login = (req, res) => {
   const { username, password } = req.body
   const user = {
-    id: 1,
+    // id: 1,
     username: username,
     // email: 'testEmail@email.com',
     password: password
   }
-  jwt.sign({user: user}, 'secretkey', { expiresIn: '30s' }, (err, token) =>{
+  jwt.sign({user: user}, 'secretkey', { expiresIn: '120s' }, (err, token) =>{
     res.json({
       token: token
     })
@@ -45,7 +45,7 @@ const login = (req, res) => {
     headers: {
       'content-type': 'application/json'
     },
-    body: {
+    data: {
       grant_type: 'client_credentials',
       name: username,
       password: password,

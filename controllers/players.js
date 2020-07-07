@@ -21,7 +21,7 @@ const getPlayerById = (req, res) => {
 
 const createPlayer = (req,res) => {
     // const { username } = req.body.username;
-    let sql = "INSERT INTO players (username) WHERE username = ?"
+    let sql = "INSERT INTO players (username) VALUE (?)"
     sql = mysql.format(sql, [req.body.username]);
 
     pool.query(sql, (err, rows) => {
