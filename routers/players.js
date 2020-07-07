@@ -7,8 +7,8 @@ router.get('/players', playersController.getAllPlayers)
 
 router.get('/players:id', playersController.getPlayerById)
 
-router.post('/players', playersController.createPlayer)
+router.post('/players', authenticate, playersController.createPlayer)
 
-router.delete('/players:username', playersController.deletePlayerByUsername)
+router.delete('/players:username', authenticate, playersController.deletePlayerByUsername)
 
 module.exports = router;
