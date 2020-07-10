@@ -10,7 +10,7 @@ const saltRounds = 10
 
 const signup = (req, res) => {
   const { username, password } = req.body
-  let sql = "INSERT INTO usersCredentials (username, password) VALUES (?, ?)"
+  let sql = "INSERT INTO playersCredentials (username, password) VALUES (?, ?)"
 
   bcrypt.hash(password, saltRounds, function(err, hash) {
     sql = mysql.format(sql, [ username, hash ])
@@ -28,45 +28,21 @@ const signup = (req, res) => {
 const login = (req, res) => {
   const { username, password } = req.body
   const user = {
-    // id: 1,
     username: username,
-    // email: 'testEmail@email.com',
     password: password
   }
   jwt.sign({user: user}, 'secretkey', { expiresIn: '120s' }, (err, token) =>{
-    res.json({
-      token: token
-    })
-  });
+    // res.json({
+    //   token: token
+    // })
+    res.cookie("token", token, { maxAge: jwtExpirySeconds * 120 })
+  })
+//   .catch(err);
 
   console.log(user);
-  axios(`https://${process.env.AUTH0_DOMAIN}/oauth/token`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json'
-    },
-    data: {
-      grant_type: 'client_credentials',
-      name: username,
-      password: password,
-      audience: process.env.AUTH0_IDENTITY,
-      connection: 'Username-Password-Authentication',
-      scope: 'openid',
-      client_id: process.env.AUTH0_CLIENT_ID,
-      client_secret: process.env.AUTH0_CLIENT_SECRET
-    }
-  })
-  .then(response => {
-    const { access_token } = response.data
-    res.json({
-      access_token
-    })
-  })
-  .catch(e => {
-    res.send(e)
-  })
 
-  let sql = "SELECT * FROM usersCredentials WHERE username = ?"
+
+  let sql = "SELECT * FROM playersCredentials WHERE username = ?"
   sql = mysql.format(sql, [ username ])
 
   pool.query(sql, (err, rows) => {
@@ -90,6 +66,31 @@ const login = (req, res) => {
   })
 }
 
+//   axios(`https://${process.env.AUTH0_DOMAIN}/oauth/token`, {
+//     method: 'POST',
+//     headers: {
+//       'content-type': 'application/json'
+//     },
+//     data: {
+//       grant_type: 'client_credentials',
+//       name: username,
+//       password: password,
+//       audience: process.env.AUTH0_IDENTITY,
+//       connection: 'Username-Password-Authentication',
+//       scope: 'openid',
+//       client_id: process.env.AUTH0_CLIENT_ID,
+//       client_secret: process.env.AUTH0_CLIENT_SECRET
+//     }
+//   })
+//   .then(response => {
+//     const { access_token } = response.data
+//     res.json({
+//       access_token
+//     })
+//   })
+//   .catch(e => {
+//     res.send(e)
+//   })
 
 module.exports = {
   signup,
