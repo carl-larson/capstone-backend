@@ -1,4 +1,4 @@
-const axios = require('axios')
+// const axios = require('axios')
 const mysql = require('mysql')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -9,49 +9,50 @@ const { handleSQLError } = require('../sql/error')
 const saltRounds = 10
 
 const signup = (req, res) => {
-  const { username, password } = req.body
-  let sql = "INSERT INTO playersCredentials (username, password) VALUES (?, ?)"
+    const { username, password } = req.body
+    let sql = "INSERT INTO playersCredentials (username, password) VALUES (?, ?)"
 
-  bcrypt.hash(password, saltRounds, function(err, hash) {
+    bcrypt.hash(password, saltRounds, function(err, hash) {
     sql = mysql.format(sql, [ username, hash ])
-  
+    
     pool.query(sql, (err, result) => {
-      if (err) {
+        if (err) {
         if (err.code === 'ER_DUP_ENTRY') return res.status(409).send('Username is taken')
         return handleSQLError(res, err)
-      }
-      return res.send('Sign-up successful')
+        }
+        return res.send('Sign-up successful')
     })
-  })
+    })
 }
 
 const login = (req, res) => {
-  const { username, password } = req.body
-  const user = {
+    const { username, password } = req.body
+    const user = {
     username: username,
     password: password
-  }
-  jwt.sign({user: user}, 'secretkey', { expiresIn: '120s' }, (err, token) =>{
-    // res.json({
-    //   token: token
-    // })
-    res.cookie("token", token, { maxAge: jwtExpirySeconds * 120 })
-  })
-//   .catch(err);
+    }
+    console.log(user);
+//   jwt.sign({user: user}, 'secretkey', { expiresIn: '120s' }, (err, token) =>{
+//     // res.json({
+//     //   token: token
+//     // })
+//     res.cookie("token", token, { maxAge: jwtExpirySeconds * 120 })
+//   })
+// //   .catch(err);
 
-  console.log(user);
+//   console.log(user);
 
 
-  let sql = "SELECT * FROM playersCredentials WHERE username = ?"
-  sql = mysql.format(sql, [ username ])
+    let sql = "SELECT * FROM playersCredentials WHERE username = ?"
+    sql = mysql.format(sql, [ username ])
 
-  pool.query(sql, (err, rows) => {
+    pool.query(sql, (err, rows) => {
     if (err) return handleSQLError(res, err)
     if (!rows.length) return res.status(404).send('No matching users')
 
     const hash = rows[0].password
     bcrypt.compare(password, hash)
-      .then(result => {
+        .then(result => {
         if (!result) return res.status(400).send('Invalid password')
 
         const data = { ...rows[0] }
@@ -59,11 +60,11 @@ const login = (req, res) => {
 
         const token = jwt.sign(data, 'secret')
         res.json({
-          msg: 'Login successful',
-          token
+            msg: 'Login successful',
+            token
         })
-      })
-  })
+        })
+    })
 }
 
 //   axios(`https://${process.env.AUTH0_DOMAIN}/oauth/token`, {

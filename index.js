@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require("express");
+const session = require('express-session');
 const bodyParser = require("body-parser");
 const playersRouter = require('./routers/players');
 const authRouter = require('./routers/auth');
@@ -7,6 +8,12 @@ const authRouter = require('./routers/auth');
 const app = express();
 const port = process.env.PORT || 4001;
 
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
+app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json())
 app.use('/', express.static('public'), playersRouter)
 app.use('/auth', authRouter)

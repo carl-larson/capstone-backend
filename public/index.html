@@ -3,12 +3,74 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Sign In</title>
+  <title>Log In</title>
+  <link rel="stylesheet" href="login.css">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
 </head>
 <body>
-  <h3>Test Login</h3>
-  
-  <!-- <script src="../index.js"></script> -->
+  <h2>Modal Login Form</h2>
+
+  <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+  <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sign Up</button>
+
+  <div id="id01" class="modal">
+    
+    <form class="modal-content animate" action="/auth/login" method="post">
+      <!-- <div class="imgcontainer">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <img src="img_avatar2.png" alt="Avatar" class="avatar">
+      </div> -->
+
+      <div class="container">
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="username" required>
+
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+          
+        <button type="submit">Login</button>
+      </div>
+
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+      </div>
+    </form>
+  </div>
+  <div id="id02" class="modal">
+    
+    <form class="modal-content animate" action="/auth/signup" method="post">
+      <!-- <div class="imgcontainer">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <img src="img_avatar2.png" alt="Avatar" class="avatar">
+      </div> -->
+
+      <div class="container">
+        <label for="username"><b>Create Username</b></label>
+        <input type="text" placeholder="Enter Username" name="username" required>
+
+        <label for="password"><b>Choose Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+          
+        <button type="submit">Sign Up</button>
+      </div>
+
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    // Get the modal
+    const modal = document.getElementById('id01');
+    const modal2 = document.getElementById('id02');
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
 </body>
 </html>
