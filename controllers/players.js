@@ -19,10 +19,31 @@ const getPlayerById = (req, res) => {
     })
 }
 
-const createPlayer = (req,res) => {
-    // const { username } = req.body.username;
-    let sql = "INSERT INTO players (username) VALUE (?)"
-    sql = mysql.format(sql, [req.body.username]);
+const getPlayerByUsername = (req, res) => {
+    let sql = "SELECT * FROM players WHERE username = ?"
+    sql = mysql.format(sql, [ req.body.username ])
+
+    pool.query(sql, (err, rows) => {
+        if (err) return handleSQLError(res, err)
+        return res.json(rows);
+    })
+}
+
+const getGameByUsername = (req, res) => {
+    let username = req.body.username;
+    let sql = "SELECT * FROM games WHERE player1_id = ? OR player2_id = ?"
+    sql = mysql.format(sql, [ username, username ])
+
+    pool.query(sql, (err, rows) => {
+        if (err) return handleSQLError(res, err)
+        return res.json(rows);
+    })
+}
+
+const createGame = (req,res) => {
+    let { player1_id, player2_id, score1, score2 } = req.body;
+    let sql = "INSERT INTO games (player1_id, player2_id, score1, score2) VALUE (?)"
+    sql = mysql.format(sql, [ player1_id, player2_id, score1, score2 ]);
 
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
@@ -42,7 +63,9 @@ const deletePlayerByUsername = (req, res) => {
 module.exports = {
     getAllPlayers,
     getPlayerById,
-    createPlayer,
+    getPlayerByUsername,
+    getGameByUsername,
+    createGame,
     // updateUserById,
     deletePlayerByUsername
 }

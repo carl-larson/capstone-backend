@@ -8,18 +8,28 @@ const { handleSQLError } = require('../sql/error')
 // for bcrypt
 const saltRounds = 10
 
+const createPlayer = (req,res) => {
+    let sql = "INSERT INTO players (username) VALUE (?)"
+    sql = mysql.format(sql, [req.body.username]);
+
+    pool.query(sql, (err, rows) => {
+        if (err) return handleSQLError(res, err)
+        return res.json({ newId: results.insertId });
+    })
+}
+
 const signup = (req, res) => {
-    const { username, password } = req.body
-    let sql = "INSERT INTO playersCredentials (username, password) VALUES (?, ?)"
+    const { username, password } = req.body;
+    let sql = "INSERT INTO playersCredentials (username, password) VALUES (?, ?)";
 
     bcrypt.hash(password, saltRounds, function(err, hash) {
-    sql = mysql.format(sql, [ username, hash ])
-    
-    pool.query(sql, (err, result) => {
-        if (err) {
-        if (err.code === 'ER_DUP_ENTRY') return res.status(409).send('Username is taken')
-        return handleSQLError(res, err)
-        }
+        sql = mysql.format(sql, [ username, hash ]);
+        
+        pool.query(sql, (err, result) => {
+            if (err) {
+            if (err.code === 'ER_DUP_ENTRY') return res.status(409).send('Username is taken')
+            return handleSQLError(res, err)
+            }
         return res.send('Sign-up successful')
     })
     })
