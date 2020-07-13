@@ -9,13 +9,13 @@ const { handleSQLError } = require('../sql/error')
 const saltRounds = 10
 const jwtExpirySeconds = 300
 
-const createPlayer = (req,res) => {
+const createPlayer = (req, res) => {
     let sql = "INSERT INTO players (username) VALUE (?)"
     sql = mysql.format(sql, [req.body.username]);
 
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
-        return res.json({ newId: results.insertId });
+        
     })
 }
 
@@ -28,12 +28,14 @@ const signup = (req, res) => {
         
         pool.query(sql, (err, result) => {
             if (err) {
-            if (err.code === 'ER_DUP_ENTRY') return res.status(409).send('Username is taken')
-            return handleSQLError(res, err)
+                if (err.code === 'ER_DUP_ENTRY') return res.status(409).send('Username is taken')
+                return handleSQLError(res, err)
             }
-        return res.send('Sign-up successful')
+            createPlayer(req, res);
+            return res.send('Sign-up successful')
+        })
     })
-    })
+    
 }
 
 const login = (req, res) => {

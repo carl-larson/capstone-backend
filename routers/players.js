@@ -7,11 +7,11 @@ router.get('/players', playersController.getAllPlayers)
 
 router.get('/players/:id', playersController.getPlayerById)
 
-router.get('/games/:username', playersController.getGameByUsername)
+router.get('/games/', playersController.getGameByUsername)
 
 router.post('/games/', playersController.createGame)
 
-router.post('/players', authenticate, logger, playersController.createPlayer)
+router.post('/players', authenticate, playersController.createPlayer)
 
 router.delete('/players/:username', authenticate, playersController.deletePlayerByUsername)
 

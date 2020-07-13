@@ -42,12 +42,12 @@ const getGameByUsername = (req, res) => {
 
 const createGame = (req,res) => {
     let { player1_id, player2_id, score1, score2 } = req.body;
-    let sql = "INSERT INTO games (player1_id, player2_id, score1, score2) VALUE (?)"
+    let sql = "INSERT INTO games (player1_id, player2_id, score1, score2) VALUE  (?, ?, ?, ?)"
     sql = mysql.format(sql, [ player1_id, player2_id, score1, score2 ]);
 
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
-        return res.json({ newId: results.insertId });
+        return res.json({ message: `Created game number: ${rows.insertId}` });
     })
 }
 
