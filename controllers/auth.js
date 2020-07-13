@@ -1,4 +1,3 @@
-// const axios = require('axios')
 // const cookie = require('cookie-parser')
 const mysql = require('mysql')
 const bcrypt = require('bcrypt')
@@ -53,9 +52,9 @@ const login = (req, res) => {
 
         const hash = rows[0].password
         bcrypt.compare(password, hash)
-            .catch(err => {
-                res.sendStatus(err)
-            })
+            // .catch(err => {
+            //     res.sendStatus(err)
+            // })
             .then(result => {
                 if (!result) return res.status(400).send('Invalid password')
 
@@ -63,11 +62,14 @@ const login = (req, res) => {
                 data.password = 'REDACTED'
 
                 let token = jwt.sign(data, 'secret', { expiresIn: '120s' })
-                res.json({
-                    msg: 'Login successful',
-                    token
-                })
+                
                 res.cookie("token", token, { maxAge: jwtExpirySeconds * 120 })
+                // res.json({
+                //     msg: 'Login successful',
+                //     token
+                // })
+                res.redirect('../success.html')
+                res.end()
             })
     })
 }
