@@ -51,6 +51,16 @@ const createGame = (req,res) => {
     })
 }
 
+const createPlayer = (req,res) => {
+    let sql = "INSERT INTO players (username) VALUE (?)"
+    sql = mysql.format(sql, [req.body.username]);
+
+    pool.query(sql, (err, rows) => {
+        if (err) return handleSQLError(res, err)
+        return res.json({ newId: results.insertId });
+    })
+}
+
 const deletePlayerByUsername = (req, res) => {
     let sql = "DELETE FROM players WHERE username = ?"
     sql = mysql.format(sql, [ req.params.username ])
@@ -66,6 +76,7 @@ module.exports = {
     getPlayerByUsername,
     getGameByUsername,
     createGame,
+    createPlayer,
     // updateUserById,
     deletePlayerByUsername
 }

@@ -27,6 +27,7 @@ const authenticate = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, 'secret')
     req.username = decoded
+    res.send(`Welcome ${decoded.username}!`)
     next()
   } catch(err) {
     res.sendStatus(401)

@@ -1,4 +1,5 @@
 // const axios = require('axios')
+// const cookie = require('cookie-parser')
 const mysql = require('mysql')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -7,6 +8,7 @@ const { handleSQLError } = require('../sql/error')
 
 // for bcrypt
 const saltRounds = 10
+const jwtExpirySeconds = 300
 
 const createPlayer = (req,res) => {
     let sql = "INSERT INTO players (username) VALUE (?)"
@@ -38,42 +40,35 @@ const signup = (req, res) => {
 const login = (req, res) => {
     const { username, password } = req.body
     const user = {
-    username: username,
-    password: password
+        username: username,
+        password: password
     }
     console.log(user);
-//   jwt.sign({user: user}, 'secretkey', { expiresIn: '120s' }, (err, token) =>{
-//     // res.json({
-//     //   token: token
-//     // })
-//     res.cookie("token", token, { maxAge: jwtExpirySeconds * 120 })
-//   })
-// //   .catch(err);
-
-//   console.log(user);
-
-
     let sql = "SELECT * FROM playersCredentials WHERE username = ?"
     sql = mysql.format(sql, [ username ])
 
     pool.query(sql, (err, rows) => {
-    if (err) return handleSQLError(res, err)
-    if (!rows.length) return res.status(404).send('No matching users')
+        if (err) return handleSQLError(res, err)
+        if (!rows.length) return res.status(404).send('No matching users')
 
-    const hash = rows[0].password
-    bcrypt.compare(password, hash)
-        .then(result => {
-        if (!result) return res.status(400).send('Invalid password')
+        const hash = rows[0].password
+        bcrypt.compare(password, hash)
+            .catch(err => {
+                res.sendStatus(err)
+            })
+            .then(result => {
+                if (!result) return res.status(400).send('Invalid password')
 
-        const data = { ...rows[0] }
-        data.password = 'REDACTED'
+                const data = { ...rows[0] }
+                data.password = 'REDACTED'
 
-        const token = jwt.sign(data, 'secret')
-        res.json({
-            msg: 'Login successful',
-            token
-        })
-        })
+                let token = jwt.sign(data, 'secret', { expiresIn: '120s' })
+                res.json({
+                    msg: 'Login successful',
+                    token
+                })
+                res.cookie("token", token, { maxAge: jwtExpirySeconds * 120 })
+            })
     })
 }
 
