@@ -9,6 +9,8 @@ router.get('/players/:id', playersController.getPlayerById)
 
 router.get('/games/', playersController.getGameByUsername)
 
+router.get('/games/all', playersController.getAllGames)
+
 router.post('/games/', playersController.createGame)
 
 router.post('/players', authenticate, playersController.createPlayer)

@@ -40,6 +40,13 @@ const getGameByUsername = (req, res) => {
     })
 }
 
+const getAllGames = (req, res) => {
+    pool.query("SELECT * FROM games", (err, rows) => {
+        if (err) return handleSQLError(res, err)
+        return res.json(rows);
+    })
+}
+
 const createGame = (req,res) => {
     let { player1_id, player2_id, score1, score2 } = req.body;
     let sql = "INSERT INTO games (player1_id, player2_id, score1, score2) VALUE  (?, ?, ?, ?)"
@@ -75,6 +82,7 @@ module.exports = {
     getPlayerById,
     getPlayerByUsername,
     getGameByUsername,
+    getAllGames,
     createGame,
     createPlayer,
     // updateUserById,
