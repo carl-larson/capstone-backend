@@ -18,7 +18,7 @@ app.use(session({
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json())
-app.use('/', express.static('public'), playersRouter)
+app.use('/', express.static('client/build'), playersRouter)
 app.use('/auth', authRouter)
 
 
