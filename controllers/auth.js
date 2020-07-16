@@ -21,6 +21,7 @@ const createPlayer = (req, res) => {
 
 const signup = (req, res) => {
     const { username, password } = req.body;
+    console.log(username);
     let sql = "INSERT INTO playersCredentials (username, password) VALUES (?, ?)";
 
     bcrypt.hash(password, saltRounds, function(err, hash) {
@@ -70,7 +71,7 @@ const login = (req, res) => {
                 //     msg: 'Login successful',
                 //     token
                 // })
-                res.redirect('../success.html')
+                res.redirect('/')
                 res.end()
             })
     })
