@@ -1,0 +1,66 @@
+.Header {
+  background-color: lightgreen;
+  min-height: 1vh;
+  height: 18vh;
+  width: 100pc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.menuButton {
+  height: 40px;
+  width: 40px;
+  color: white;
+  background-color: white;
+}
+
+h1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.topNav {
+  width: 100%;
+  display: none;
+  position: absolute;
+  
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navButton {
+  color: black;
+  margin: 5px;
+  /* text-decoration: none; */
+  
+}
+
+.navButton :hover {
+  color: red;
+  border: 2px solid green;
+}
+
+.navButtonLink {
+  color: black;
+  text-decoration: none;
+}
+
+.playButtons {
+  display: none;
+  text-align: right;
+}
+
+@media (min-width: 600px) {
+  .topNav {
+    width: 400px;
+    background-color: lightgray;
+  }
+}

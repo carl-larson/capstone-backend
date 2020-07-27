@@ -1,0 +1,4 @@
+runtime: nodejs10
+
+env_variables:
+  CLOUD_INSTANCE: concrete-craft-270101:us-central1:first-instance
