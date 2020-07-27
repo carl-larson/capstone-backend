@@ -1,12 +1,13 @@
+//dependencies
 require('dotenv').config()
 const express = require("express");
 const session = require('express-session');
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
-
+//routers
 const playersRouter = require('./routers/players');
 const authRouter = require('./routers/auth');
-
+//more initializing
 const app = express();
 const port = process.env.PORT || 4001;
 
