@@ -19,7 +19,7 @@ function Login(props) {
     return (
         <div className="signupForm forms">
             <form className="login-form" action="/auth/signup" method="post">
-            <label for="username">Create Username</label>
+            <label>Create Username</label>
             <input
                 onChange={e => setUsername(e.target.value)}
                 placeholder="Enter Username"
@@ -27,7 +27,7 @@ function Login(props) {
                 value={username}
                 type="text"
                 required />
-            <label for="password">Create Password</label>
+            <label>Create Password</label>
             <input
                 onChange={e => setPassword(e.target.value)}
                 placeholder="Enter Password"

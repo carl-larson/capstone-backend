@@ -1,4 +1,4 @@
-// const cookie = require('cookie-parser')
+// const cookieParser = require('cookie-parser')
 const mysql = require('mysql')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -29,11 +29,14 @@ const signup = (req, res) => {
         
         pool.query(sql, (err, result) => {
             if (err) {
-                if (err.code === 'ER_DUP_ENTRY') return res.status(409).send('Username is taken')
-                return handleSQLError(res, err)
+                if (err.code === 'ER_DUP_ENTRY')
+                return res.status(409).send('Username is taken')
+                // return handleSQLError(res, err)
             }
             createPlayer(req, res);
-            return res.send('Sign-up successful')
+            console.log("sign up successful")
+            res.redirect('/')
+            res.end()
         })
     })
     
@@ -64,9 +67,11 @@ const login = (req, res) => {
                 const data = { ...rows[0] }
                 data.password = 'REDACTED'
 
-                let token = jwt.sign(data, 'secret', { expiresIn: '120s' })
+                let token = jwt.sign(data, 'secret', { expiresIn: jwtExpirySeconds })
                 
-                res.cookie("token", token, { maxAge: jwtExpirySeconds * 120 })
+            //maxAge is in milliseconds
+                res.cookie("token", token, { maxAge: jwtExpirySeconds * 1000 })
+                res.cookie("username", username, { maxAge: jwtExpirySeconds * 1000 })
                 // res.json({
                 //     msg: 'Login successful',
                 //     token
@@ -75,6 +80,14 @@ const login = (req, res) => {
                 res.end()
             })
     })
+}
+
+const logout = (req, res) => {
+    res.cookie("token", "", { maxAge: -1 });
+    res.cookie("username", "");
+    console.log('Successful logout');
+    res.redirect('/');
+    res.end();
 }
 
 //   axios(`https://${process.env.AUTH0_DOMAIN}/oauth/token`, {
@@ -105,5 +118,6 @@ const login = (req, res) => {
 
 module.exports = {
   signup,
-  login
+  login,
+  logout
 }

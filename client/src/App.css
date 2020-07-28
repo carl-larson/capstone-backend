@@ -1,12 +1,10 @@
 .Header {
   background-color: lightgreen;
-  min-height: 1vh;
+  
   height: 18vh;
-  width: 100pc;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -43,7 +41,7 @@ h1 {
   
 }
 
-.navButton :hover {
+.navButton:hover {
   color: red;
   border: 2px solid green;
 }
