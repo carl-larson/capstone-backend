@@ -82,13 +82,13 @@ const login = (req, res) => {
     })
 }
 
-const logout = (req, res) => {
-    res.cookie("token", "", { maxAge: -1 });
-    res.cookie("username", "");
-    console.log('Successful logout');
-    res.redirect('/');
-    res.end();
-}
+// const logout = (req, res) => {
+//     res.cookie("token", "", { maxAge: -1 });
+//     res.cookie("username", "");
+//     console.log('Successful logout');
+//     res.redirect('/');
+//     res.end();
+// }
 
 //   axios(`https://${process.env.AUTH0_DOMAIN}/oauth/token`, {
 //     method: 'POST',
@@ -118,6 +118,6 @@ const logout = (req, res) => {
 
 module.exports = {
   signup,
-  login,
-  logout
+  login
+//   logout
 }

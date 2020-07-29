@@ -13,10 +13,10 @@ class PlayerPage extends React.Component {
 
     componentDidMount() {
         fetch(`/players/${this.state.username}`)
-            .then(res => {
-                // console.log('res', res);
-                return res.json()
-            })
+            // .then(res => {
+            //     // console.log('res', res);
+            //     return res.json()
+            // })
             .then(playerName => { 
                 console.log(playerName); 
                 this.setState({ player: playerName.username })

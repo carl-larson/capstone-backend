@@ -62,6 +62,7 @@ class Navigation extends React.Component {
                 <div className='topNav' style={{display: this.state.topNavButtons}}>
                     <span className="navButton"><Link className="navButtonLink" to="/">Home</Link></span>
                     <span className="navButton"><Link className="navButtonLink" to="/farkle">Farkle</Link></span>
+                    <span className="navButton"><Link className="navButtonLink" to="/farklerules">How to Play</Link></span>
                     <span className="navButton"><Link className="navButtonLink" to="/playerpage">Players</Link></span>
                 </div>
             </div>

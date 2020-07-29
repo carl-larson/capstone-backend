@@ -18,6 +18,7 @@ function Login(props) {
 
     return (
         <div className="signupForm forms">
+            <h3>Choose a player name and password!</h3>
             <form className="login-form" action="/auth/signup" method="post">
             <label>Create Username</label>
             <input

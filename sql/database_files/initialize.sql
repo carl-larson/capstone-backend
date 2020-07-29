@@ -22,22 +22,24 @@ id INT NOT NULL AUTO_INCREMENT,
   player2 VARCHAR(50),
   score1 INT NOT NULL,
   score2 INT NOT NULL,
-  PRIMARY KEY (id)
---   FOREIGN KEY (player1)
---   REFERENCES players (username),
---   FOREIGN KEY (player2)
---   REFERENCES players (username)
+  score1_tracker VARCHAR(250),
+  score2_tracker VARCHAR(250),
+  PRIMARY KEY (id),
+  FOREIGN KEY (player1)
+  REFERENCES players (username),
+  FOREIGN KEY (player2)
+  REFERENCES players (username)
 );
 
-INSERT INTO playersCredentials
-	(username, password)
-VALUES 
-	("Jimothy","123456"),
-    ("TestUser","TestPass"),
-    ("Sam","123456"),
-    ("Jim","123456");
+-- INSERT INTO playersCredentials
+-- 	(username, password)
+-- VALUES 
+-- 	("Jimothy","123456"),
+--     ("TestUser","TestPass"),
+--     ("Sam","123456"),
+--     ("Jim","123456");
 
-SELECT * FROM playersCredentials;
+-- SELECT * FROM playersCredentials;
 
 -- INSERT INTO players
 -- 	(first_name, last_name)
