@@ -21,11 +21,11 @@ const getPlayerById = (req, res) => {
 
 const getPlayerByUsername = (req, res) => {
     let sql = "SELECT * FROM players WHERE username = ?"
-    sql = mysql.format(sql, [ req.body.username ])
+    sql = mysql.format(sql, [ req.params.username ])
 
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
-        return res.json(rows);
+        return res.json(rows[0]);
     })
 }
 

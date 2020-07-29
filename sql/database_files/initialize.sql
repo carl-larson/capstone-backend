@@ -18,15 +18,15 @@ CREATE TABLE players (
 
 CREATE TABLE games (
 id INT NOT NULL AUTO_INCREMENT,
-  player1_id INT NOT NULL,
-  player2_id INT NOT NULL,
+  player1 VARCHAR(50),
+  player2 VARCHAR(50),
   score1 INT NOT NULL,
   score2 INT NOT NULL,
   PRIMARY KEY (id)
---   FOREIGN KEY (player1_id)
---   REFERENCES players (id),
---   FOREIGN KEY (player2_id)
---   REFERENCES players (id)
+--   FOREIGN KEY (player1)
+--   REFERENCES players (username),
+--   FOREIGN KEY (player2)
+--   REFERENCES players (username)
 );
 
 INSERT INTO playersCredentials
@@ -47,11 +47,11 @@ SELECT * FROM playersCredentials;
 INSERT INTO games
 	(player1_id, player2_id, score1, score2)
 VALUES 
-  (1, 2, 0, 5000),
-  (1, 2, 2000, 5600),
-  (1, 2, 3000, 9000),
-  (1, 2, 6000, 0),
-  (3, 4, 2000, 5000),
-  (2, 3, 1000, 5900);
+  ("Jimothy", "TestUser", 0, 5000),
+  ("Jimothy", "TestUser", 2000, 5600),
+  ("Jimothy", "TestUser", 3000, 9000),
+  ("Jim", "Sam", 6000, 0),
+  ("Sam", "TestUser", 2000, 5000),
+  ("Sam", "Jimothy", 1000, 5900);
   
  

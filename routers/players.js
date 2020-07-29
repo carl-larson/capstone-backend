@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/players', playersController.getAllPlayers)
 
-router.get('/players/:id', playersController.getPlayerById)
+router.get('/players/:username', playersController.getPlayerByUsername)
 
 router.get('/games/', playersController.getGameByUsername)
 
