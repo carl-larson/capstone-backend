@@ -31,7 +31,7 @@ const getPlayerByUsername = (req, res) => {
 
 const getGameByUsername = (req, res) => {
     let username = req.body.username;
-    let sql = "SELECT * FROM games WHERE player1_id = ? OR player2_id = ?"
+    let sql = "SELECT * FROM games WHERE player1 = ? OR player2 = ?"
     sql = mysql.format(sql, [ username, username ])
 
     pool.query(sql, (err, rows) => {
@@ -48,9 +48,9 @@ const getAllGames = (req, res) => {
 }
 
 const createGame = (req,res) => {
-    let { player1_id, player2_id, score1, score2 } = req.body;
-    let sql = "INSERT INTO games (player1_id, player2_id, score1, score2) VALUE  (?, ?, ?, ?)"
-    sql = mysql.format(sql, [ player1_id, player2_id, score1, score2 ]);
+    let { player1, player2, turn, score1, score2, score1_tracker, score2_tracker } = req.body;
+    let sql = "INSERT INTO games (player1, player2, turn, score1, score2, score1_tracker, score2_tracker) VALUE  (?, ?, ?, ?, ?, ?, ?)"
+    sql = mysql.format(sql, [ player1, player2, turn, score1, score2, score1_tracker, score2_tracker ]);
 
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
