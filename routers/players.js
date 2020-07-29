@@ -7,7 +7,7 @@ router.get('/players', playersController.getAllPlayers)
 
 router.get('/players/:username', playersController.getPlayerByUsername)
 
-router.get('/games/', playersController.getGameByUsername)
+router.get('/games/:username', playersController.getGameByUsername)
 
 router.get('/games/all', playersController.getAllGames)
 

@@ -30,21 +30,37 @@ class PlayerPage extends React.Component {
             return res.json()
         })
         .then(players => { 
-            console.log('playerlist ', players); 
-            this.setState({ playerList: players })
+            let playerList = players.filter(name => name !== this.state.username)
+            console.log('playerlist ', players, playerList); 
+            this.setState({ playerList: playerList })
         });
-        fetch(`/games/all`)
+        fetch(`/games/${this.state.username}`)
             .then(res => {
                 return res.json()
             })
             .then(games => {
                 console.log('games', games);
-                this.setState({ gameList: games})
+                this.setState({ gameList: games })
             })
     }
 
-    createGame = () => {
-        // this.displayPlayers();
+    invitePlayer = (opponent) => {
+        const newGameRequest = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                player1: this.state.username,
+                player2: opponent,
+                turn: 1,
+                score1: 0,
+                score2: 0,
+                score1_tracker: '0',
+                score2_tracker: '0'
+            })
+        };
+        fetch('/games', newGameRequest)
+            .then(response => response.json())
+            .then(data => console.log('game created', data.id));
     }
 
     displayPlayers = () => {
@@ -62,7 +78,8 @@ class PlayerPage extends React.Component {
                 <button onClick={this.displayPlayers}>Create Game</button>
                 <ul>
                     {this.state.gameList.map(game =>
-                    <li key={game.id}>player1: {game.player1} player2: {game.player2}</li>)}
+                    <li key={game.id}>player1: {game.player1} player2: {game.player2}</li>
+                    )}
                 </ul>
                 <div id="id01" className="modal" style={{display: this.state.modalDisplay}}>
                     <span onClick={this.displayPlayers} className="close" title="Close Modal">&times;</span>
@@ -70,7 +87,10 @@ class PlayerPage extends React.Component {
                         <div className="container">
                             <ul>
                                 {this.state.playerList.map(player =>
-                                <li key={player.id}>player1: {player.username} <button>Invite</button></li>)}
+                                <li key={player.id}>Player: {player.username}
+                                    <button onClick={() => {this.invitePlayer(player.username)}}>Invite</button>
+                                </li>
+                                )}
                             </ul>
                         </div>
                         <div className="container" style={{backgroundColor: "#f1f1f1"}}>

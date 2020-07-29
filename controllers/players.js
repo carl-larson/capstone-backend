@@ -30,7 +30,7 @@ const getPlayerByUsername = (req, res) => {
 }
 
 const getGameByUsername = (req, res) => {
-    let username = req.body.username;
+    let username = req.params.username;
     let sql = "SELECT * FROM games WHERE player1 = ? OR player2 = ?"
     sql = mysql.format(sql, [ username, username ])
 
