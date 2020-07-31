@@ -47,10 +47,21 @@ const getAllGames = (req, res) => {
     })
 }
 
-const createGame = (req,res) => {
+const createGame = (req, res) => {
     let { player1, player2, turn, score1, score2, score1_tracker, score2_tracker } = req.body;
     let sql = "INSERT INTO games (player1, player2, turn, score1, score2, score1_tracker, score2_tracker) VALUE  (?, ?, ?, ?, ?, ?, ?)"
     sql = mysql.format(sql, [ player1, player2, turn, score1, score2, score1_tracker, score2_tracker ]);
+
+    pool.query(sql, (err, rows) => {
+        if (err) return handleSQLError(res, err)
+        return res.json({ message: `Created game number: ${rows.insertId}` });
+    })
+}
+
+const updateGame = (req, res) => {
+    let { player1, player2, turn, score1, score2, score1_tracker, score2_tracker, id } = req.body;
+    let sql = "UPDATE games SET player1 = ?, player2 = ?, turn = ?, score1 = ?, score2 = ?, score1_tracker = ?, score2_tracker = ? WHERE id = ?"
+    sql = mysql.format(sql, [ player1, player2, turn, score1, score2, score1_tracker, score2_tracker, id ]);
 
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
@@ -84,6 +95,7 @@ module.exports = {
     getGameByUsername,
     getAllGames,
     createGame,
+    updateGame,
     createPlayer,
     // updateUserById,
     deletePlayerByUsername

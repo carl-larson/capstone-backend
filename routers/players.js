@@ -11,7 +11,9 @@ router.get('/games/:username', playersController.getGameByUsername)
 
 router.get('/games/all', playersController.getAllGames)
 
-router.post('/games/', playersController.createGame)
+router.post('/games/', authenticate, playersController.createGame)
+
+router.put('/games/', playersController.updateGame)
 
 router.post('/players', authenticate, playersController.createPlayer)
 

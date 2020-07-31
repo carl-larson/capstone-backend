@@ -9,6 +9,7 @@ class Farkle extends React.Component {
         super(props);
         this.state = {
             points: 0,
+            
             playing: false,
             mustRoll: true,
             mustKeep: false,
@@ -55,7 +56,9 @@ class Farkle extends React.Component {
         this.keepAndUpdateScore = this.keepAndUpdateScore.bind(this);
         this.recursiveCounting = this.recursiveCounting.bind(this);
         this.scorePass = this.scorePass.bind(this);
-
+        
+        this.scoreTrackerOne = [];
+        this.scoreTrackerTwo = [];
         this.selectedDice = [];
         this.score = 0;
         // this.keptCount = 0;
@@ -162,12 +165,13 @@ class Farkle extends React.Component {
         return keptCount;
     }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //         console.log("component update");
-    //     // This will keep the points current until they are committed to the score.
-    //         if(this.state !== prevState){this.updatePoints()};
-    //         return;
-    // }
+    componentDidMount() {
+        //turn score trackers into arrays and save them to state
+        let scoreArray1 = this.props.location.state.score1_tracker.split(',');
+        let scoreArray2 = this.props.location.state.score2_tracker.split(',');
+        this.scoreTrackerOne = scoreArray1;
+        this.scoreTrackerTwo = scoreArray2;
+    }
 
 //PUT DICE INTO selectedDice ARRAY FOR SCORE PURPOSES
     sortDice(ind) {
@@ -248,14 +252,62 @@ class Farkle extends React.Component {
     }
 
     scorePass() {
-        return
+        let oldInfo = this.props.location.state;
+        console.log("here's the old info");
+        console.log(oldInfo);
+        let gameID = oldInfo.id;
+        //Choose which score tracker array to use from constructor
+        let scoreTrackerArray = [];
+        let scoreTrackerUpdate1 = oldInfo.score1_tracker;
+        let scoreTrackerUpdate2 = oldInfo.score2_tracker;
+        let scoreUpdate1 = oldInfo.score1;
+        let scoreUpdate2 = oldInfo.score2;
+        //make score being submitted into a string
+        let currentScoreString = this.score.toString();
+        //Add current score string to correct score tracker array and join back into string
+        //intentionally join them with a comma by leaving .join() blank
+        if (oldInfo.turn === 1) {
+            scoreTrackerArray = this.scoreTrackerOne;
+            scoreTrackerArray.push(currentScoreString);
+            scoreTrackerUpdate1 = scoreTrackerArray.join();
+            scoreUpdate1 += this.score;
+        } else {
+            scoreTrackerArray = this.scoreTrackerTwo;
+            scoreTrackerArray.push(currentScoreString);
+            scoreTrackerUpdate2 = scoreTrackerArray.join();
+            scoreUpdate2 += this.score;
+        };
+        
+        //Update turn number to let other player go
+        let newTurn = oldInfo.turn;
+        newTurn === 1 ? newTurn = 2 : newTurn = 1;
+        const scoreAndPass = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                id: gameID,
+                player1: oldInfo.player1,
+                player2: oldInfo.player2,
+                turn: newTurn,
+                score1: scoreUpdate1,
+                score2: scoreUpdate2,
+                score1_tracker: scoreTrackerUpdate1,
+                score2_tracker: scoreTrackerUpdate2
+            })
+        };
+        console.log("here's the new info")
+        console.log(scoreAndPass.body)
+        fetch('/games', scoreAndPass)
+            .then(response => response.json())
+            .then(data => console.log('game created', data.player2));
     }
 
     render() {
         let die = this.state.dice;
+        let gameInfo = this.props.location.state;
         return (
             <div className='board'>
-                <ScoreBoard message={this.state.message} points={this.state.points} score={this.score}/>
+                <ScoreBoard message={this.state.message} points={this.state.points} score={this.score} player1={gameInfo.player1} player2={gameInfo.player2} score1={gameInfo.score1} score2={gameInfo.score2}/>
                 <div  className='diceButtons'>
                     <button onClick={this.rollDice} disabled={this.state.mustKeep}>Roll!</button>
                     <button onClick={this.keepAndUpdateScore} disabled={this.state.mustRoll}>Keep Points</button>
