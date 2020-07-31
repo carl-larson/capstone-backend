@@ -1,5 +1,7 @@
 import React from 'react'
 import Cookies from 'js-cookie'
+import { Link } from 'react-router-dom'
+
 import './playerPage.css'
 
 class PlayerPage extends React.Component {
@@ -60,7 +62,7 @@ class PlayerPage extends React.Component {
         };
         fetch('/games', newGameRequest)
             .then(response => response.json())
-            .then(data => console.log('game created', data.id));
+            .then(data => console.log('game created', data.player2));
     }
 
     displayPlayers = () => {
@@ -70,6 +72,12 @@ class PlayerPage extends React.Component {
         // modal === "none" ? modal = "block" : modal = "none";
     }
 
+    // goToGame = (data) => {
+    //     console.log('Your opponent', data)
+    //     <Redirect to={{}}
+    //     />
+    // }
+
     render() {
         // let modalStyle = this.modalDisplay;
         return (
@@ -77,8 +85,14 @@ class PlayerPage extends React.Component {
                 <h2>Player: {this.state.player}</h2>
                 <button onClick={this.displayPlayers}>Create Game</button>
                 <ul>
-                    {this.state.gameList.map(game =>
-                    <li key={game.id}>player1: {game.player1} player2: {game.player2}</li>
+                    {this.state.gameList.map(game => {
+                        let buttonDisplay = 'none';
+                        let playerTurn = '';
+                        if (game.turn === 1) {playerTurn = game.player1}
+                        else {playerTurn = game.player2}
+                        if (playerTurn === this.state.username) {buttonDisplay = 'inline-block'}
+                        return <li key={game.id}><button className="joinGameButton" style={{display: buttonDisplay}}><Link to={{pathname: '/farkle', state: {...game}}}>Your turn!</Link></button>player1: {game.player1} player2: {game.player2}</li>
+                        }
                     )}
                 </ul>
                 <div id="id01" className="modal" style={{display: this.state.modalDisplay}}>
