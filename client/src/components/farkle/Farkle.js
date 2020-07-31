@@ -95,7 +95,8 @@ class Farkle extends React.Component {
         if (comboSearchResults === true) {
             console.log('Found combo')
         } else {
-            console.log('No combo found')
+            console.log('No combo found');
+            this.score = 0;
             this.setState({message: 'Bust!', mustKeep: true, mustRoll: true})
             
         }
@@ -307,7 +308,7 @@ class Farkle extends React.Component {
         let gameInfo = this.props.location.state;
         return (
             <div className='board'>
-                <ScoreBoard message={this.state.message} points={this.state.points} score={this.score} player1={gameInfo.player1} player2={gameInfo.player2} score1={gameInfo.score1} score2={gameInfo.score2}/>
+                <ScoreBoard scoreTrackerOne={this.scoreTrackerOne} scoreTrackerTwo={this.scoreTrackerTwo} message={this.state.message} points={this.state.points} score={this.score} player1={gameInfo.player1} player2={gameInfo.player2} score1={gameInfo.score1} score2={gameInfo.score2}/>
                 <div  className='diceButtons'>
                     <button onClick={this.rollDice} disabled={this.state.mustKeep}>Roll!</button>
                     <button onClick={this.keepAndUpdateScore} disabled={this.state.mustRoll}>Keep Points</button>
