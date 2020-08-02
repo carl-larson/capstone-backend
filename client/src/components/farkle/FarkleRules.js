@@ -14,13 +14,13 @@ function FarkleRules() {
             <div className="rulesTableDiv">
                 <table className="rulesTable">
                     <tbody>
-                    <tr><td>Dice</td><td>Points</td></tr>
+                    <tr><th>Dice</th><th>Points</th></tr>
                     <tr><td>One</td><td>100</td></tr>
                     <tr><td>Five</td><td>50</td></tr>
                     <tr><td>Three of a kind</td><td>3x Face value</td></tr>
                     <tr><td>Three ones</td><td>1000</td></tr>
                     <tr><td>Four of a kind</td><td>1000</td></tr>
-                    <tr><td>Five of a kind</td><td>1500</td></tr>
+                    <tr><td>Five of a kind</td><td>2000</td></tr>
                     </tbody>
                 </table>
             </div>

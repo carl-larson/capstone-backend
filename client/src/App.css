@@ -1,7 +1,7 @@
 .Header {
-  background-color: lightgreen;
-  
-  height: 18vh;
+  background-color: rgb(39, 145, 39);
+  justify-items: center;
+  height: 15vh;
   width: 100vw;
   display: grid;
   grid-template-columns: 20% 60% 20%;
@@ -17,8 +17,15 @@
 }
 
 h1 {
+  font-family: 'chalktastic', sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
+  border: 6px solid brown;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  width: 220px;
 }
 
 .topNav {
@@ -56,9 +63,36 @@ h1 {
   text-align: right;
 }
 
+.rulesTable {
+  border-collapse: collapse;
+  width: 300px;
+}
+
+td, th {
+  
+  border: 1px solid black;
+  padding: 4px;
+}
+
 @media (min-width: 600px) {
   .topNav {
     width: 400px;
     background-color: lightgray;
   }
+}
+
+@font-face {
+  font-family: 'chalktastic';
+		src: 
+		local('Chalktastic'),
+		url('/components/fonts/Chalktastic-r78L.ttf') 
+    format('truetype');
+}
+@font-face {
+	font-family: 'chalktastic';
+		src: 
+		local('Chalktastic'),
+		url('/components/fonts/ChalktasticItalic-pEwZ.ttf') 
+    format('truetype');
+    font-weight: bold;
 }

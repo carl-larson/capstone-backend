@@ -63,10 +63,10 @@ class Farkle extends React.Component {
         this.selectedDice = [];
         this.score = 0;
         // this.keptCount = 0;
-        this.combos = [{values:'123456', worth: 1500},{values: '11', worth: 100},{values: '55', worth: 50},{values: '1', worth: 100},{values: '5', worth: 50},
-        {values:'666666', worth: 3000},{values:'555555', worth: 3000},{values:'444444', worth: 3000},{values:'333333', worth: 3000},{values:'222222', worth: 3000},{values:'111111', worth: 3000},
-        {values:'66666', worth: 2000},{values:'55555', worth: 2000},{values:'44444', worth: 2000},{values:'33333', worth: 2000},{values:'22222', worth: 2000},{values:'11111', worth: 2000},
-        {values:'6666', worth: 1000},{values:'5555', worth: 1000},{values:'4444', worth: 1000},{values:'3333', worth: 1000},{values:'2222', worth: 1000},{values:'1111', worth: 1100},
+        this.combos = [{values:'123456', worth: 2850},{values: '11', worth: 100},{values: '55', worth: 50},{values: '1', worth: 100},{values: '5', worth: 50},
+        {values:'666666', worth: 1000},{values:'555555', worth: 1000},{values:'444444', worth: 1000},{values:'333333', worth: 1000},{values:'222222', worth: 1000},{values:'111111', worth: 3000},
+        {values:'66666', worth: 1000},{values:'55555', worth: 1000},{values:'44444', worth: 1000},{values:'33333', worth: 1000},{values:'22222', worth: 1000},{values:'11111', worth: 2000},
+        {values:'6666', worth: 400},{values:'5555', worth: 500},{values:'4444', worth: 600},{values:'3333', worth: 700},{values:'2222', worth: 800},{values:'1111', worth: 1100},
         {values:'666', worth: 600},{values:'555', worth: 400},{values:'444', worth: 400},{values:'333', worth: 300},{values:'222', worth: 200},{values:'111', worth: 800}
         ];
     }
@@ -253,7 +253,7 @@ class Farkle extends React.Component {
     }
 
     scorePass() {
-        this.setState({playing: false})
+        this.setState({playing: false, mustKeep: true, mustRoll: true})
         let oldInfo = this.props.location.state;
         console.log("here's the old info");
         console.log(oldInfo);
@@ -310,7 +310,7 @@ class Farkle extends React.Component {
         let gameInfo = this.props.location.state;
         return (
             <div className='board'>
-                <ScoreBoard scoreTrackerOne={this.scoreTrackerOne} scoreTrackerTwo={this.scoreTrackerTwo} points={this.state.points} score={this.score} player1={gameInfo.player1} player2={gameInfo.player2} score1={gameInfo.score1} score2={gameInfo.score2}/>
+                
                 <div  className='diceButtons'>
                     <h4>{this.state.message}</h4>
                     <button onClick={this.rollDice} disabled={this.state.mustKeep}>Roll!</button>
@@ -325,7 +325,7 @@ class Farkle extends React.Component {
                     <div onClick={() => this.select(4)}><Row className='row5' value={die[4].value} selected={die[4].selected} kept={die[4].kept}></Row></div>
                     <div onClick={() => this.select(5)}><Row className='row6' value={die[5].value} selected={die[5].selected} kept={die[5].kept}></Row></div>
                 </div>
-                
+                <ScoreBoard scoreTrackerOne={this.scoreTrackerOne} scoreTrackerTwo={this.scoreTrackerTwo} points={this.state.points} score={this.score} player1={gameInfo.player1} player2={gameInfo.player2} score1={gameInfo.score1} score2={gameInfo.score2}/>
             </div>
 
         )

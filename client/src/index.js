@@ -4,6 +4,8 @@ import {BrowserRouter} from 'react-router-dom'
 
 import './index.css';
 import './App.css';
+import './components/fonts/Chalktastic-r78L.ttf'
+import './components/fonts/ChalktasticItalic-pEwZ.ttf'
 
 import App from './App'
 // import Navigation from './components/Navigation'

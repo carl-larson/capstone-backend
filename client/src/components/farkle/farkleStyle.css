@@ -1,12 +1,12 @@
 .board {
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: 33% 34% 33%;
     /* justify-content: center; */
     /* align-items: center; */
     height: 100%;
     width: 100%;
-    border: 2px solid green;
-    background-color: lightgreen;
+    border: 6px solid brown;
+    background-color: rgb(39, 145, 39);
 }
 
 .diceButtons {
@@ -68,8 +68,9 @@
     background-color: black;
 }
 
-.messageBox {
-    height: 64px;
+.messageBox h4{
+    /* height: 64px; */
+    margin: 0.5 em;
     /* color: white; */
 }
 

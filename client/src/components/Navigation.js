@@ -43,7 +43,7 @@ class Navigation extends React.Component {
             authButtons = 
             <div className="loginButtons">
                 <span className="navButton" onClick={this.logout}>Log Out</span>
-                <span><h3>{this.state.username}</h3></span>
+                <span className="navButton"><Link className="navButtonLink" to="/playerpage">{this.state.username}</Link></span>
             </div>
         } else {
             authButtons = 
@@ -56,7 +56,8 @@ class Navigation extends React.Component {
 
         return (
             <div className="Header">
-                <span className="menuButton" onClick={this.displayTopNav}></span>
+                {/* <span className="menuButton" onClick={this.displayTopNav}></span> */}
+                <span className="navButton"><Link className="navButtonLink" to="/farklerules">How to Play</Link></span>
                 <h1>Farkle!</h1>
                 {authButtons}
                 <div className='topNav' style={{display: this.state.topNavButtons}}>

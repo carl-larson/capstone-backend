@@ -18,21 +18,21 @@ class ScoreBoard extends React.Component {
             <div className='App'>
                 <div className='scoreBoard'>
                     <div className='messageBox'>
-                        <table><tbody>
-                            <tr><th>{this.props.player1}: {this.props.score1}</th></tr>
+                        <h4>{this.props.player1}: {this.props.score1}</h4>
+                            <ul>
                             {this.props.scoreTrackerOne.map((score, id) => {
-                                return <tr key={id}><td>{score}</td></tr>
+                                return <li key={id}>{score}</li>
                             })}
-                        </tbody></table>
-                        
-                    </div>
-                    <span className='scoreBox'>
-                    <table><tbody>
-                            <tr><th>{this.props.player2}: {this.props.score2}</th></tr>
+                        </ul>
+                        <h4>{this.props.player2}: {this.props.score2}</h4>
+                        <ul>
                             {this.props.scoreTrackerTwo.map((score, id) => {
-                                return <tr key={id}><td>{score}</td></tr>
+                                return <li key={id}>{score}</li>
                             })}
-                        </tbody></table>
+                        </ul>
+                    </div>
+                    <span className='messageBox'>
+                        
                     </span>
                     <span className='currentPoints'>
                         <p>Selected Points: {this.props.points}</p>
