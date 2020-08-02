@@ -8,10 +8,12 @@ const logger = (req, res, next) => {
 const authenticate = (req, res, next) => {
   const header = req.headers['authorization'] || ''
   const [ bearer, token ] = header.split(' ')
+  console.log(bearer)
   console.log(token);
 
   try {
     const decoded = jwt.verify(token, 'secret')
+    console.log(decoded)
     req.username = decoded
     res.send(`Welcome ${decoded.username}!`)
     next()

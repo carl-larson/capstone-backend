@@ -47,9 +47,11 @@ class PlayerPage extends React.Component {
     }
 
     invitePlayer = (opponent) => {
+        let cookieToken = Cookies.get('token')
+        console.log(cookieToken)
         const newGameRequest = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'authorization': `bearer ${cookieToken}`, 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
                 player1: this.state.username,
                 player2: opponent,
@@ -84,28 +86,37 @@ class PlayerPage extends React.Component {
             <div className="App">
                 <h2>Player: {this.state.player}</h2>
                 <button onClick={this.displayPlayers}>Create Game</button>
-                <ul>
-                    {this.state.gameList.map(game => {
-                        let buttonDisplay = 'none';
-                        let playerTurn = '';
-                        if (game.turn === 1) {playerTurn = game.player1}
-                        else {playerTurn = game.player2}
-                        if (playerTurn === this.state.username) {buttonDisplay = 'inline-block'}
-                        return <li key={game.id}><button className="joinGameButton" style={{display: buttonDisplay}}><Link to={{pathname: '/farkle', state: {...game}}}>Your turn!</Link></button>player1: {game.player1} player2: {game.player2}</li>
-                        }
-                    )}
-                </ul>
+                <table>
+                    {/* <th>Your Games:</th> */}
+                    <tbody>
+                        <tr><th colSpan='3'>Your Games</th></tr>
+                        <tr><th>Whose turn?</th><th>Player 1</th><th>Player 2</th></tr>
+                        {this.state.gameList.map(game => {
+                            let buttonDisplay = 'none';
+                            let playerTurn = '';
+                            if (game.turn === 1) {playerTurn = game.player1}
+                            else if (game.turn === 2) {playerTurn = game.player2}
+                            else {playerTurn = ''}
+                            if (playerTurn === this.state.username) {buttonDisplay = 'inline-block'}
+                            return <tr key={game.id}><td><button className="joinGameButton" style={{display: buttonDisplay}}><Link to={{pathname: '/farkle', state: {...game}}}>Your turn!</Link></button></td><td>{game.player1}</td><td>{game.player2}</td></tr>
+                            }
+                        )}
+                    </tbody>
+                </table>
                 <div id="id01" className="modal" style={{display: this.state.modalDisplay}}>
                     <span onClick={this.displayPlayers} className="close" title="Close Modal">&times;</span>
                     <div className="modal-content">
                         <div className="container">
-                            <ul>
-                                {this.state.playerList.map(player =>
-                                <li key={player.id}>Player: {player.username}
-                                    <button onClick={() => {this.invitePlayer(player.username)}}>Invite</button>
-                                </li>
-                                )}
-                            </ul>
+                            <table>
+                                <tbody>
+                                    <tr><th colSpan='2'>Choose an Opponent</th></tr>
+                                    <tr><th>Player</th><th>Invite?</th></tr>
+                                    {this.state.playerList.map(player =>
+                                    <tr key={player.id}><td>{player.username}</td><td><button onClick={() => {this.invitePlayer(player.username)}}>Invite</button></td>
+                                    </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
                         <div className="container" style={{backgroundColor: "#f1f1f1"}}>
                         <button type="button" onClick={this.displayPlayers} className="cancelbtn">Cancel</button>

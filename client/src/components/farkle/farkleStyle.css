@@ -13,26 +13,27 @@
     padding: 10%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
 .diceButtons button{
     width: 128px;
     height: 32px;
+    margin: 10px 0px 10px 0px;
 }
 
 .diceBoard {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .row {
     /* border: 2px solid black; */
-    padding: 10px 0px 10px 0px;
+    padding: 5px 0px 5px 0px;
     display: flex;
     flex-direction: row;
 }

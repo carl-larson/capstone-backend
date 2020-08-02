@@ -1,9 +1,9 @@
 const express = require('express')
 const authController = require('../controllers/auth')
-const playersController = require('../controllers/players')
+// const playersController = require('../controllers/players')
 const router = express.Router()
 
-router.post('/signup', authController.signup, playersController.createPlayer)
+router.post('/signup', authController.signup)
 
 router.post('/login', authController.login)
 

@@ -76,7 +76,7 @@ const login = (req, res) => {
                 //     msg: 'Login successful',
                 //     token
                 // })
-                res.redirect('/')
+                res.redirect('/playerpage')
                 res.end()
             })
     })

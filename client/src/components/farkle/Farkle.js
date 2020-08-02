@@ -1,6 +1,7 @@
 import React from 'react';
 import Row from './Row';
 import ScoreBoard from './ScoreBoard'
+import Cookies from 'js-cookie'
 
 import './farkleStyle.css';
 
@@ -70,6 +71,12 @@ class Farkle extends React.Component {
         ];
     }
     
+    componentDidMount() {
+        //turn score trackers into arrays and save them to state
+        this.scoreTrackerOne = this.props.location.state.score1_tracker.split(',');
+        this.scoreTrackerTwo = this.props.location.state.score2_tracker.split(',');
+    }
+
     comboSearch(comboSearchString) {
         let comboSearchResults = false;
         let i = 0;
@@ -166,13 +173,6 @@ class Farkle extends React.Component {
         return keptCount;
     }
 
-    componentDidMount() {
-        //turn score trackers into arrays and save them to state
-        let scoreArray1 = this.props.location.state.score1_tracker.split(',');
-        let scoreArray2 = this.props.location.state.score2_tracker.split(',');
-        this.scoreTrackerOne = scoreArray1;
-        this.scoreTrackerTwo = scoreArray2;
-    }
 
 //PUT DICE INTO selectedDice ARRAY FOR SCORE PURPOSES
     sortDice(ind) {
@@ -253,6 +253,7 @@ class Farkle extends React.Component {
     }
 
     scorePass() {
+        this.setState({playing: false})
         let oldInfo = this.props.location.state;
         console.log("here's the old info");
         console.log(oldInfo);
@@ -282,9 +283,10 @@ class Farkle extends React.Component {
         //Update turn number to let other player go
         let newTurn = oldInfo.turn;
         newTurn === 1 ? newTurn = 2 : newTurn = 1;
+        let cookieToken = Cookies.get('token');
         const scoreAndPass = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'authorization': `bearer:${cookieToken}` },
             body: JSON.stringify({ 
                 id: gameID,
                 player1: oldInfo.player1,
@@ -308,11 +310,12 @@ class Farkle extends React.Component {
         let gameInfo = this.props.location.state;
         return (
             <div className='board'>
-                <ScoreBoard scoreTrackerOne={this.scoreTrackerOne} scoreTrackerTwo={this.scoreTrackerTwo} message={this.state.message} points={this.state.points} score={this.score} player1={gameInfo.player1} player2={gameInfo.player2} score1={gameInfo.score1} score2={gameInfo.score2}/>
+                <ScoreBoard scoreTrackerOne={this.scoreTrackerOne} scoreTrackerTwo={this.scoreTrackerTwo} points={this.state.points} score={this.score} player1={gameInfo.player1} player2={gameInfo.player2} score1={gameInfo.score1} score2={gameInfo.score2}/>
                 <div  className='diceButtons'>
+                    <h4>{this.state.message}</h4>
                     <button onClick={this.rollDice} disabled={this.state.mustKeep}>Roll!</button>
                     <button onClick={this.keepAndUpdateScore} disabled={this.state.mustRoll}>Keep Points</button>
-                    <button onClick={this.scorePass}>Score and Pass</button>
+                    <button onClick={this.scorePass} disabled={!this.state.playing}>Score and Pass</button>
                 </div>
                 <div className='diceBoard'>
                     <div onClick={() => this.select(0)}><Row className='row1' value={die[0].value} selected={die[0].selected} kept={die[0].kept}></Row></div>
