@@ -7,7 +7,7 @@ const { handleSQLError } = require('../sql/error')
 
 // for bcrypt
 const saltRounds = 10
-const jwtExpirySeconds = 300
+const jwtExpirySeconds = 1200
 
 const createPlayer = (req, res) => {
     let sql = "INSERT INTO players (username) VALUE (?)"

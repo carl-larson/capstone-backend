@@ -79,6 +79,16 @@ const createPlayer = (req,res) => {
     })
 }
 
+const deleteGameById = (req, res) => {
+    let sql = "DELETE FROM games WHERE id = ?"
+    sql = mysql.format(sql, [ req.body.id ])
+
+    pool.query(sql, (err, results) => {
+        if (err) return handleSQLError(res, err)
+        return res.json({ message: `Deleted ${results.affectedRows} game`, id: req.body.id });
+    })
+}
+
 const deletePlayerByUsername = (req, res) => {
     let sql = "DELETE FROM players WHERE username = ?"
     sql = mysql.format(sql, [ req.params.username ])
@@ -98,5 +108,6 @@ module.exports = {
     updateGame,
     createPlayer,
     // updateUserById,
+    deleteGameById,
     deletePlayerByUsername
 }

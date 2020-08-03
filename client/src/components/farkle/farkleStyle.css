@@ -75,7 +75,7 @@
     margin: 5px;
 }
 
-.scoreTrackerTable th, td {
+.scoreTH, .scoreTD {
     border: 1px solid white;
 }
 

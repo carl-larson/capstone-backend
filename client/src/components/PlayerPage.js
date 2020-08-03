@@ -65,6 +65,15 @@ class PlayerPage extends React.Component {
         fetch('/games', newGameRequest)
             .then(response => response.json())
             .then(data => console.log('game created', data.player2));
+        this.setState({modalDisplay: 'none'});
+        fetch(`/games/${this.state.username}`)
+            .then(res => {
+                return res.json()
+            })
+            .then(games => {
+                console.log('games', games);
+                this.setState({ gameList: games })
+            })
     }
 
     displayPlayers = () => {
@@ -72,6 +81,26 @@ class PlayerPage extends React.Component {
         console.log("displaying players", this.state.modalDisplay);
         // let modal = document.getElementById('id01').style.display;
         // modal === "none" ? modal = "block" : modal = "none";
+    }
+
+    deleteGame = (gameId, index) => {
+        let listGames = this.state.gameList;
+        listGames.splice(index, 1);
+        this.setState({gameList: listGames})
+
+        let cookieToken = Cookies.get('token')
+        // console.log(cookieToken)
+        const deleteGameRequest = {
+            method: 'DELETE',
+            headers: { 'authorization': `bearer ${cookieToken}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                id: gameId
+            })
+        };
+        fetch('/games', deleteGameRequest)
+            .then(response => response.json())
+            .then(data => console.log('deleted game: ', data.id));
+        
     }
 
     // goToGame = (data) => {
@@ -84,30 +113,37 @@ class PlayerPage extends React.Component {
         // let modalStyle = this.modalDisplay;
         return (
             <div className="App">
-                <h2>Player: {this.state.player}</h2>
-                <button onClick={this.displayPlayers}>Create Game</button>
-                <table>
-                    {/* <th>Your Games:</th> */}
-                    <tbody>
-                        <tr><th colSpan='3'>Your Games</th></tr>
-                        <tr><th>Whose turn?</th><th>Player 1</th><th>Player 2</th></tr>
-                        {this.state.gameList.map(game => {
-                            let buttonDisplay = 'none';
-                            let playerTurn = '';
-                            if (game.turn === 1) {playerTurn = game.player1}
-                            else if (game.turn === 2) {playerTurn = game.player2}
-                            else {playerTurn = ''}
-                            if (playerTurn === this.state.username) {buttonDisplay = 'inline-block'}
-                            return <tr key={game.id}><td><button className="joinGameButton" style={{display: buttonDisplay}}><Link to={{pathname: '/farkle', state: {...game}}}>Your turn!</Link></button></td><td>{game.player1}</td><td>{game.player2}</td></tr>
-                            }
-                        )}
-                    </tbody>
-                </table>
+                <div className = "mainDiv">
+                    <h2>Player: {this.state.player}</h2>
+                    <button className="createButton" onClick={this.displayPlayers}>Create Game</button>
+                    <table>
+                        <tbody>
+                            <tr><th colSpan='4'>Your Games</th></tr>
+                            <tr><th>Whose turn?</th><th>Player 1</th><th>Player 2</th><th>Delete</th></tr>
+                            {this.state.gameList.map((game, index) => {
+                                let buttonDisplay = 'none';
+                                let playerTurn = '';
+                                if (game.turn === 1) {playerTurn = game.player1}
+                                else if (game.turn === 2) {playerTurn = game.player2}
+                                else {playerTurn = ''}
+                                if (playerTurn === this.state.username) {buttonDisplay = 'inline-block'}
+                                    return (<tr key={index}><td><button className="joinGameButton" style={{display: buttonDisplay}}><Link to={{pathname: '/farkle', state: {...game}}}>Your turn!</Link></button></td>
+                                        <td>{game.player1}</td>
+                                        <td>{game.player2}</td>
+                                        <td onClick={() => this.deleteGame(game.id, index)}>♻</td>
+                                    </tr>)
+                                }
+                            )}
+                        </tbody>
+                    </table>
+                    <button className="playerDelete">Delete Player Account</button>
+                </div>
+                
                 <div id="id01" className="modal" style={{display: this.state.modalDisplay}}>
-                    <span onClick={this.displayPlayers} className="close" title="Close Modal">&times;</span>
+                    
                     <div className="modal-content">
                         <div className="container">
-                            <table>
+                            <table className="opponentTable">
                                 <tbody>
                                     <tr><th colSpan='2'>Choose an Opponent</th></tr>
                                     <tr><th>Player</th><th>Invite?</th></tr>
@@ -117,10 +153,12 @@ class PlayerPage extends React.Component {
                                     )}
                                 </tbody>
                             </table>
+                            <span onClick={this.displayPlayers} className="close" title="Close Modal">&times;</span>
                         </div>
                         <div className="container" style={{backgroundColor: "#f1f1f1"}}>
-                        <button type="button" onClick={this.displayPlayers} className="cancelbtn">Cancel</button>
+                            <button type="button" onClick={this.displayPlayers} className="cancelbtn">Cancel</button>
                         </div>
+                        
                     </div>
                 </div>
             </div>

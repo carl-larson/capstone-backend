@@ -17,6 +17,8 @@ router.put('/games/', playersController.updateGame)
 
 // router.post('/players', authenticate, playersController.createPlayer)
 
+router.delete('/games/', playersController.deleteGameById)
+
 router.delete('/players/:username', playersController.deletePlayerByUsername)
 
 module.exports = router;

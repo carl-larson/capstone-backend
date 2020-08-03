@@ -18,8 +18,7 @@
 
 h1 {
   font-family: 'chalktastic', sans-serif;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px;
   border: 6px solid brown;
   border-radius: 10px;
   background-color: black;
@@ -49,8 +48,8 @@ h1 {
 }
 
 .navButton:hover {
-  color: red;
-  border: 2px solid green;
+  /* color: red; */
+  border: 2px solid brown;
 }
 
 .navButtonLink {
@@ -61,6 +60,10 @@ h1 {
 .playButtons {
   display: none;
   text-align: right;
+}
+
+.homeIntro {
+  text-align: center;
 }
 
 .rulesBlock {
@@ -82,12 +85,12 @@ td, th {
   padding: 4px;
 }
 
-@media (min-width: 600px) {
+/* @media (min-width: 600px) {
   .topNav {
     width: 400px;
     background-color: lightgray;
   }
-}
+} */
 
 @font-face {
   font-family: 'chalktastic';

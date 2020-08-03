@@ -23,13 +23,13 @@ class ScoreBoard extends React.Component {
                     </span>
                     <div className='messageBox'>
                         <table className='scoreTrackerTable'><tbody>
-                        <tr><th>{this.props.player1}: {this.props.score1}</th><th>{this.props.player2}: {this.props.score2}</th></tr>
-                            <tr><td><ul>
+                        <tr><th className="scoreTH">{this.props.player1}: {this.props.score1}</th><th className="scoreTH">{this.props.player2}: {this.props.score2}</th></tr>
+                            <tr><td className="scoreTD"><ul>
                             {this.props.scoreTrackerOne.map((score, id) => {
                                 return <li key={id}>{score}</li>
                             })}
                         </ul>
-                        </td><td>
+                        </td><td className="scoreTD">
                         <ul>
                             {this.props.scoreTrackerTwo.map((score, id) => {
                                 return <li key={id}>{score}</li>
