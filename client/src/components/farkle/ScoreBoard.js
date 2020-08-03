@@ -17,27 +17,29 @@ class ScoreBoard extends React.Component {
         return (
             <div className='App'>
                 <div className='scoreBoard'>
-                    <div className='messageBox'>
-                        <h4>{this.props.player1}: {this.props.score1}</h4>
-                            <ul>
-                            {this.props.scoreTrackerOne.map((score, id) => {
-                                return <li key={id}>{score}</li>
-                            })}
-                        </ul>
-                        <h4>{this.props.player2}: {this.props.score2}</h4>
-                        <ul>
-                            {this.props.scoreTrackerTwo.map((score, id) => {
-                                return <li key={id}>{score}</li>
-                            })}
-                        </ul>
-                    </div>
-                    <span className='messageBox'>
-                        
-                    </span>
                     <span className='currentPoints'>
                         <p>Selected Points: {this.props.points}</p>
                         <p>Kept Points: {this.props.score}</p>
                     </span>
+                    <div className='messageBox'>
+                        <table className='scoreTrackerTable'><tbody>
+                        <tr><th>{this.props.player1}: {this.props.score1}</th><th>{this.props.player2}: {this.props.score2}</th></tr>
+                            <tr><td><ul>
+                            {this.props.scoreTrackerOne.map((score, id) => {
+                                return <li key={id}>{score}</li>
+                            })}
+                        </ul>
+                        </td><td>
+                        <ul>
+                            {this.props.scoreTrackerTwo.map((score, id) => {
+                                return <li key={id}>{score}</li>
+                            })}
+                        </ul></td></tr>
+                            
+                        </tbody></table>
+                        
+                    </div>
+                    
                 </div>
             </div>
         )

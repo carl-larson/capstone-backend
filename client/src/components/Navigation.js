@@ -42,13 +42,13 @@ class Navigation extends React.Component {
         if (isLoggedIn === true) {
             authButtons = 
             <div className="loginButtons">
-                <span className="navButton" onClick={this.logout}>Log Out</span>
+                <span className="navButton" onClick={this.logout}>Log Out</span><br />
                 <span className="navButton"><Link className="navButtonLink" to="/playerpage">{this.state.username}</Link></span>
             </div>
         } else {
             authButtons = 
             <div className="loginButtons">
-                <span className="navButton"><Link className="navButtonLink" to="/login">Log In</Link></span>
+                <span className="navButton"><Link className="navButtonLink" to="/login">Log In</Link></span><br />
                 <span className="navButton"><Link className="navButtonLink" to="/signup">Sign Up</Link></span>
             </div>
         }

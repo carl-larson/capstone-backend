@@ -11,12 +11,12 @@ router.get('/games/:username', playersController.getGameByUsername)
 
 router.get('/games/all', playersController.getAllGames)
 
-router.post('/games/', authenticate, playersController.createGame)
+router.post('/games/', playersController.createGame)
 
 router.put('/games/', playersController.updateGame)
 
-router.post('/players', authenticate, playersController.createPlayer)
+// router.post('/players', authenticate, playersController.createPlayer)
 
-router.delete('/players/:username', authenticate, playersController.deletePlayerByUsername)
+router.delete('/players/:username', playersController.deletePlayerByUsername)
 
 module.exports = router;

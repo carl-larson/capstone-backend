@@ -63,9 +63,17 @@ h1 {
   text-align: right;
 }
 
+.rulesBlock {
+  width: 60vw;
+}
+
 .rulesTable {
-  border-collapse: collapse;
   width: 300px;
+}
+
+table {
+  border-collapse: collapse;
+  /* width: 300px; */
 }
 
 td, th {
