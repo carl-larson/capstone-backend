@@ -42,13 +42,13 @@ class Navigation extends React.Component {
         if (isLoggedIn === true) {
             authButtons = 
             <div className="loginButtons">
-                <span className="navButton" onClick={this.logout}><Link className="navButtonLink" to="/">Log Out</Link></span><br />
+                <span className="navButton" onClick={this.logout}><Link className="navButtonLink" to="/">Log Out</Link></span>
                 <span className="navButton"><Link className="navButtonLink" to="/playerpage">{this.state.username}</Link></span>
             </div>
         } else {
             authButtons = 
             <div className="loginButtons">
-                <span className="navButton"><Link className="navButtonLink" to="/login">Log In</Link></span><br />
+                <span className="navButton"><Link className="navButtonLink" to="/login">Log In</Link></span>
                 <span className="navButton"><Link className="navButtonLink" to="/signup">Sign Up</Link></span>
             </div>
         }
@@ -57,15 +57,15 @@ class Navigation extends React.Component {
         return (
             <div className="Header">
                 {/* <span className="menuButton" onClick={this.displayTopNav}></span> */}
-                <span className="navButton"><Link className="navButtonLink" to="/farklerules">How to Play</Link></span>
+                <span className="navButton rulesButton"><Link className="navButtonLink" to="/farklerules">How to Play</Link></span>
                 <h1>Farkle!</h1>
                 {authButtons}
-                <div className='topNav' style={{display: this.state.topNavButtons}}>
+                {/* <div className='topNav' style={{display: this.state.topNavButtons}}>
                     <span className="navButton"><Link className="navButtonLink" to="/">Home</Link></span>
                     <span className="navButton"><Link className="navButtonLink" to="/farkle">Farkle</Link></span>
                     <span className="navButton"><Link className="navButtonLink" to="/farklerules">How to Play</Link></span>
                     <span className="navButton"><Link className="navButtonLink" to="/playerpage">Players</Link></span>
-                </div>
+                </div> */}
             </div>
         )
     }

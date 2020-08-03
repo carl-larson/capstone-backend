@@ -4,6 +4,7 @@ import React from 'react';
 import './App.css';
 import Navigation from './components/Navigation'
 import ReactRouter from './router/ReactRouter'
+import ScreenBorder from './components/ScreenBorder'
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
     <div className='App'>
       <Navigation />
       <ReactRouter />
+      <ScreenBorder />
     </div>
   );
 }

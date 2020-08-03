@@ -19,19 +19,19 @@ class Row extends React.Component {
         let xKeptPosition = -64;
         let yPosition = -((value - 1) * 64);
         
-        let selectedcolor = 'gray';
-        let keptcolor = 'gray';
+        let selectedcolor = 'lightgray';
+        let keptcolor = 'lightgray';
         // selected ? bordercolor = 'red' : bordercolor = 'gray';
         if (selected && !kept) {
             selectedcolor = 'red';
         } else if (selected && kept) {
-            selectedcolor = 'gray';
+            selectedcolor = 'lightgray';
             keptcolor = 'red';
             xRolledPosition = -64;
             xKeptPosition = 0;
         } else {
-            selectedcolor = 'gray';
-            keptcolor = 'gray';
+            selectedcolor = 'lightgray';
+            keptcolor = 'lightgray';
             xRolledPosition = 0;
             xKeptPosition = -64;
         }

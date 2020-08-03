@@ -116,7 +116,7 @@ class PlayerPage extends React.Component {
                 <div className = "mainDiv">
                     <h2>Player: {this.state.player}</h2>
                     <button className="createButton" onClick={this.displayPlayers}>Create Game</button>
-                    <table>
+                    <table className="playerTable">
                         <tbody>
                             <tr><th colSpan='4'>Your Games</th></tr>
                             <tr><th>Whose turn?</th><th>Player 1</th><th>Player 2</th><th>Delete</th></tr>

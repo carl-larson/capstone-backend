@@ -9,30 +9,6 @@ function Login(props) {
     // const [ loading, setLoading ] = useState(null);
     const loading = null;
 
-    // const login = (e) => {
-    //     e.preventDefault();
-    //     const userData = {
-    //         username: username,
-    //         password: password
-    //     }
-    //     console.log("Login information:");
-    //     console.log(userData);
-    //     fetch('../auth/login', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(userData),
-    //         })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log('Success:', userData.username);
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error:', error);
-    //     });
-    // }
-
     return (
         <div className="loginForm forms">
             <h3>Please log in.</h3>

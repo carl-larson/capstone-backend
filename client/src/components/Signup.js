@@ -9,13 +9,6 @@ function Login(props) {
     // const [ loading, setLoading ] = useState(null);
     const loading = null;
 
-    // const login = (e) => {
-    // e.preventDefault();
-    // props.history.push('/');
-    // document.cookie = `loggedIn=true;max-age=60*1000`;
-    // document.cookie += 'username='+this.state.username+';max-age=60*1000';
-    // }
-
     return (
         <div className="signupForm forms">
             <h3>Choose a player name and password!</h3>

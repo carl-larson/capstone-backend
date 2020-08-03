@@ -115,9 +115,7 @@ class Farkle extends React.Component {
 //RECEIVES SELECTED DICE IN STRING FORM, RETURNS POINTS
     recursiveCounting(dice, points) {
         console.log(dice)
-        // let dice1 = dice;
         let dice2 = '';
-        // let index = dice.search(combos[i].values);
     // EXIT LOOP IF DICE STRING IS EMPTY
         if (dice === dice2 && points > 0) {
             this.setState({keepButtonOff: false});
@@ -131,20 +129,12 @@ class Farkle extends React.Component {
                 this.recursiveCounting(dice2, points)
             }
         }
-        // if (dice2 !== '') {
-        //     this.allValidPoints = false;
-        // }
         return points;
-
-        // console.log('new dice string: ', dice)
-        // console.log('search for: ', combos[0].values, index)
-        // return points;
     }
 
     updatePoints() {
         let dice = this.selectedDice.join('');
         console.log('original dice string: ', dice)
-        // let diceLength = dice.length;
         let points = 0;
         //turns off keep button unless recursiveCounting() changes this to false
         this.setState({keepButtonOff: true})
@@ -206,10 +196,8 @@ class Farkle extends React.Component {
             console.log('clicked');
             let diceList = [...this.state.dice];
             let selectDie = diceList[ind];
-            // console.log (e)
             if (selectDie.kept === false) {
                 selectDie.selected ? selectDie.selected = false : selectDie.selected = true;
-                // diceList = [...diceList, selectDie];
                 this.sortDice(ind);
             } else {
                 return;
@@ -233,7 +221,8 @@ class Farkle extends React.Component {
         //Begins the game
         this.setState({playing: true, rollButtonOff: true})
         
-        //Keep all selected dice and move selected points to kept score (calls same method that the keep button does)
+        //Keep all selected dice and move selected points to kept score (calls
+        // same method that the keep button does)
         //Returns kept count
         let keptCount = 0;
 
