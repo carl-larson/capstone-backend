@@ -9,7 +9,7 @@ class PlayerPage extends React.Component {
         super(props);
         this.state = {
             username: Cookies.get('username'),
-            player: '',
+            player: Cookies.get('username'),
             modalDisplay: 'none',
             gameList: [],
             playerList: []
@@ -17,15 +17,15 @@ class PlayerPage extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`/players/${this.state.username}`)
-            .then(res => {
-                console.log('res', res);
-                return res.json()
-            })
-            .then(playerName => { 
-                console.log(playerName); 
-                this.setState({ player: playerName.username })
-            });
+        // fetch(`/players/${this.state.username}`)
+        //     .then(res => {
+        //         console.log('res', res);
+        //         return res.json()
+        //     })
+        //     .then(playerName => { 
+        //         console.log(playerName); 
+        //         this.setState({ player: playerName.username })
+        //     });
         fetch(`/players`)
         .then(res => {
             console.log('res', res);
@@ -35,6 +35,9 @@ class PlayerPage extends React.Component {
             let playerList = players.filter(name => name !== this.state.username)
             console.log('playerlist ', players, playerList); 
             this.setState({ playerList: playerList })
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
         fetch(`/games/${this.state.username}`)
             .then(res => {
@@ -44,6 +47,9 @@ class PlayerPage extends React.Component {
                 console.log('games', games);
                 this.setState({ gameList: games })
             })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     invitePlayer = (opponent) => {
