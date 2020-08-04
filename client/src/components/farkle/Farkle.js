@@ -60,6 +60,8 @@ class Farkle extends React.Component {
         
         this.scoreTrackerOne = [];
         this.scoreTrackerTwo = [];
+        this.scoreBoardScore1 = this.props.location.state.score1;
+        this.scoreBoardScore2 = this.props.location.state.score2;
         this.selectedDice = [];
         this.score = 0;
         this.allValidPoints = false;
@@ -292,7 +294,9 @@ class Farkle extends React.Component {
         //Update turn number to let other player go
         let newTurn = oldInfo.turn;
         newTurn === 1 ? newTurn = 2 : newTurn = 1;
+        //Authorization in player router
         let cookieToken = Cookies.get('token');
+        //Build new fetch json to PUT changes to game info
         const scoreAndPass = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', 'authorization': `bearer:${cookieToken}` },
@@ -307,6 +311,8 @@ class Farkle extends React.Component {
                 score2_tracker: scoreTrackerUpdate2
             })
         };
+        this.scoreBoardScore1 = scoreUpdate1;
+        this.scoreBoardScore2 = scoreUpdate2;
         console.log("here's the new info")
         console.log(scoreAndPass.body)
         fetch('/games', scoreAndPass)
@@ -334,7 +340,7 @@ class Farkle extends React.Component {
                     <div onClick={() => this.select(4)}><Row className='row5' value={die[4].value} selected={die[4].selected} kept={die[4].kept}></Row></div>
                     <div onClick={() => this.select(5)}><Row className='row6' value={die[5].value} selected={die[5].selected} kept={die[5].kept}></Row></div>
                 </div>
-                <ScoreBoard scoreTrackerOne={this.scoreTrackerOne} scoreTrackerTwo={this.scoreTrackerTwo} points={this.state.points} score={this.score} player1={gameInfo.player1} player2={gameInfo.player2} score1={gameInfo.score1} score2={gameInfo.score2}/>
+                <ScoreBoard scoreTrackerOne={this.scoreTrackerOne} scoreTrackerTwo={this.scoreTrackerTwo} points={this.state.points} score={this.score} player1={gameInfo.player1} player2={gameInfo.player2} score1={this.scoreBoardScore1} score2={this.scoreBoardScore2}/>
             </div>
 
         )

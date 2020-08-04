@@ -48,7 +48,7 @@ const login = (req, res) => {
         username: username,
         password: password
     }
-    console.log(user);
+    // console.log(user);
     let sql = "SELECT * FROM playersCredentials WHERE username = ?"
     sql = mysql.format(sql, [ username ])
 

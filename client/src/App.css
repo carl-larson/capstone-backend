@@ -148,14 +148,14 @@ td, th {
   font-family: 'chalktastic';
 		src: 
 		local('Chalktastic'),
-		url('/components/fonts/Chalktastic-r78L.ttf') 
+		url('./fonts/Chalktastic-r78L.ttf') 
     format('truetype');
 }
 @font-face {
 	font-family: 'chalktastic';
 		src: 
 		local('Chalktastic'),
-		url('/components/fonts/ChalktasticItalic-pEwZ.ttf') 
+		url('./fonts/ChalktasticItalic-pEwZ.ttf') 
     format('truetype');
     font-weight: bold;
 }

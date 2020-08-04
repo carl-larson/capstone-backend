@@ -23,7 +23,7 @@ class ScreenBorder extends React.Component {
     render() {
         return (
             <div className="greenSquareRow">{this.state.array.map(square => {
-                return <div className="greenSquare" />
+                return <div key={square} className="greenSquare" />
             })}</div>
         )
     }
