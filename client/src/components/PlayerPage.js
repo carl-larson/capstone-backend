@@ -65,7 +65,8 @@ class PlayerPage extends React.Component {
                 score1: 0,
                 score2: 0,
                 score1_tracker: '0',
-                score2_tracker: '0'
+                score2_tracker: '0',
+                winner: null
             })
         };
         fetch('/games', newGameRequest)
@@ -84,7 +85,7 @@ class PlayerPage extends React.Component {
 
     displayPlayers = () => {
         this.state.modalDisplay === 'none' ? this.setState({modalDisplay: 'block'}) : this.setState({modalDisplay: 'none'});
-        console.log("displaying players", this.state.modalDisplay);
+        // console.log("displaying players", this.state.modalDisplay);
         // let modal = document.getElementById('id01').style.display;
         // modal === "none" ? modal = "block" : modal = "none";
     }
@@ -109,14 +110,8 @@ class PlayerPage extends React.Component {
         
     }
 
-    // goToGame = (data) => {
-    //     console.log('Your opponent', data)
-    //     <Redirect to={{}}
-    //     />
-    // }
-
     render() {
-        // let modalStyle = this.modalDisplay;
+        
         return (
             <div className="App">
                 <div className = "mainDiv">
@@ -124,18 +119,21 @@ class PlayerPage extends React.Component {
                     <button className="createButton" onClick={this.displayPlayers}>Create Game</button>
                     <table className="playerTable">
                         <tbody>
-                            <tr><th colSpan='4'>Your Games</th></tr>
-                            <tr><th>Whose turn?</th><th>Player 1</th><th>Player 2</th><th>Delete</th></tr>
+                            <tr><th colSpan='5'>Your Games</th></tr>
+                            <tr><th>Whose turn?</th><th>Player 1</th><th>Player 2</th><th>Winner!</th><th>Delete</th></tr>
                             {this.state.gameList.map((game, index) => {
                                 let buttonDisplay = 'none';
                                 let playerTurn = '';
+                                let bgcolor = 'black';
                                 if (game.turn === 1) {playerTurn = game.player1}
                                 else if (game.turn === 2) {playerTurn = game.player2}
                                 else {playerTurn = ''}
                                 if (playerTurn === this.state.username) {buttonDisplay = 'inline-block'}
-                                    return (<tr key={index}><td><button className="joinGameButton" style={{display: buttonDisplay}}><Link to={{pathname: '/farkle', state: {...game}}}>Your turn!</Link></button></td>
+                                if (game.winner) {bgcolor = 'gray'}
+                                    return (<tr key={index} style={{backgroundColor: bgcolor}}><td><button className="joinGameButton" style={{display: buttonDisplay}}><Link to={{pathname: '/farkle', state: {...game}}}>Your turn!</Link></button></td>
                                         <td>{game.player1}</td>
                                         <td>{game.player2}</td>
+                                        <td>{game.winner}</td>
                                         <td onClick={() => this.deleteGame(game.id, index)}>♻</td>
                                     </tr>)
                                 }

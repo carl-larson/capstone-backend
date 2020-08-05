@@ -72,7 +72,7 @@ h1 {
   /* color: red; */
   font-size: 28px;
   background-color:rgb(25, 194, 25);
-  border: 2px solid brown;
+  border: 2px solid rgb(119, 23, 23);
 }
 
 .navButtonLink {
@@ -93,7 +93,15 @@ h1 {
   width: 60vw;
 }
 
+.rulesTableDiv {
+  color: white;
+  background-color:black;
+  border: 4px solid rgb(119, 23, 23);
+  box-shadow: 5px 5px 5px rgb(24, 107, 24);
+}
+
 .rulesTable {
+  
   width: 300px;
 }
 

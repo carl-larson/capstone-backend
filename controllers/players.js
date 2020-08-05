@@ -48,9 +48,9 @@ const getAllGames = (req, res) => {
 }
 
 const createGame = (req, res) => {
-    let { player1, player2, turn, score1, score2, score1_tracker, score2_tracker } = req.body;
-    let sql = "INSERT INTO games (player1, player2, turn, score1, score2, score1_tracker, score2_tracker) VALUE  (?, ?, ?, ?, ?, ?, ?)"
-    sql = mysql.format(sql, [ player1, player2, turn, score1, score2, score1_tracker, score2_tracker ]);
+    let { player1, player2, turn, score1, score2, score1_tracker, score2_tracker, winner } = req.body;
+    let sql = "INSERT INTO games (player1, player2, turn, score1, score2, score1_tracker, score2_tracker, winner) VALUE  (?, ?, ?, ?, ?, ?, ?, ?)"
+    sql = mysql.format(sql, [ player1, player2, turn, score1, score2, score1_tracker, score2_tracker, winner ]);
 
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
@@ -59,9 +59,9 @@ const createGame = (req, res) => {
 }
 
 const updateGame = (req, res) => {
-    let { player1, player2, turn, score1, score2, score1_tracker, score2_tracker, id } = req.body;
-    let sql = "UPDATE games SET player1 = ?, player2 = ?, turn = ?, score1 = ?, score2 = ?, score1_tracker = ?, score2_tracker = ? WHERE id = ?"
-    sql = mysql.format(sql, [ player1, player2, turn, score1, score2, score1_tracker, score2_tracker, id ]);
+    let { player1, player2, turn, score1, score2, score1_tracker, score2_tracker, winner, id } = req.body;
+    let sql = "UPDATE games SET player1 = ?, player2 = ?, turn = ?, score1 = ?, score2 = ?, score1_tracker = ?, score2_tracker = ?, winner = ? WHERE id = ?"
+    sql = mysql.format(sql, [ player1, player2, turn, score1, score2, score1_tracker, score2_tracker, winner, id ]);
 
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)

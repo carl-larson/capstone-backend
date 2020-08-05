@@ -56,6 +56,7 @@ class Farkle extends React.Component {
         this.updatePoints = this.updatePoints.bind(this);
         this.keepAndUpdateScore = this.keepAndUpdateScore.bind(this);
         this.recursiveCounting = this.recursiveCounting.bind(this);
+        this.checkForWinner = this.checkForWinner.bind(this);
         this.scorePass = this.scorePass.bind(this);
         
         this.scoreTrackerOne = [];
@@ -65,6 +66,7 @@ class Farkle extends React.Component {
         this.selectedDice = [];
         this.score = 0;
         this.allValidPoints = false;
+        this.winner = null;
         // this.keptCount = 0;
         this.combos = [{values:'123456', worth: 2850},{values: '11', worth: 100},{values: '55', worth: 50},{values: '1', worth: 100},{values: '5', worth: 50},
         {values:'666666', worth: 1000},{values:'555555', worth: 1000},{values:'444444', worth: 1000},{values:'333333', worth: 1000},{values:'222222', worth: 1000},{values:'111111', worth: 3000},
@@ -261,6 +263,43 @@ class Farkle extends React.Component {
         this.checkForCombos();
     }
 
+    checkForWinner(oldInfo) {
+        // Update player turn without winner
+        let newTurn = oldInfo.turn;
+        newTurn === 1 ? newTurn = 2 : newTurn = 1;
+        // Player 1 can't win on their turn
+        if (oldInfo.turn === 2) {
+            // if player 2 has 5000, check if player 1 also does;
+            if (this.scoreBoardScore2 > 4999) {
+                
+                if (this.scoreBoardScore1 < 5000) {
+                    //if player 1 does not, player 2 wins
+                    this.winner = oldInfo.player2;
+                    this.setState({message: 'You win!'});
+                    newTurn = 0;
+                } else { 
+                    //if both players have over 5000 points see who has more
+                    if (this.scoreBoardScore1 > this.scoreBoardScore2) {
+                        this.winner = oldInfo.player1;
+                        this.setState({message: `${oldInfo.player1} wins!`});
+                        newTurn = 0;
+                    } else if (this.scoreBoardScore1 < this.scoreBoardScore2) {
+                        this.winner = oldInfo.player2;
+                        this.setState({message: 'You win!'});
+                        newTurn = 0;
+                    } 
+                }
+            } else if (this.scoreBoardScore1 > 4999) {
+                this.winner = oldInfo.player1;
+                this.setState({message: `${oldInfo.player1} wins!`});
+                newTurn = 0;
+            }
+        } else if (this.scoreBoardScore1 > 4999) {
+            this.setState({message: 'Player 2 gets one more chance!'})
+        }
+        return newTurn;
+    }
+
     scorePass() {
         this.setState({playing: false, rollButtonOff: true, keepButtonOff: true})
         let oldInfo = this.props.location.state;
@@ -291,9 +330,18 @@ class Farkle extends React.Component {
             this.setState({message: `Now it's ${oldInfo.player1}'s turn`})
         };
         
-        //Update turn number to let other player go
+        //Moved turn deciding into the checkForWinner method
         let newTurn = oldInfo.turn;
-        newTurn === 1 ? newTurn = 2 : newTurn = 1;
+        
+        
+        // Update scores for display and to check for winner
+        this.scoreBoardScore1 = scoreUpdate1;
+        this.scoreBoardScore2 = scoreUpdate2;
+        //Update turn number to let other player go and also
+        //Updates winner variable and add message if there is a winner
+        //  and update turn to 0 
+        newTurn = this.checkForWinner(oldInfo);
+        console.log(this.state.message)
         //Authorization in player router
         let cookieToken = Cookies.get('token');
         //Build new fetch json to PUT changes to game info
@@ -308,11 +356,11 @@ class Farkle extends React.Component {
                 score1: scoreUpdate1,
                 score2: scoreUpdate2,
                 score1_tracker: scoreTrackerUpdate1,
-                score2_tracker: scoreTrackerUpdate2
+                score2_tracker: scoreTrackerUpdate2,
+                winner: this.winner
             })
         };
-        this.scoreBoardScore1 = scoreUpdate1;
-        this.scoreBoardScore2 = scoreUpdate2;
+        
         console.log("here's the new info")
         console.log(scoreAndPass.body)
         fetch('/games', scoreAndPass)
