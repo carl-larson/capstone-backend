@@ -89,15 +89,30 @@ const deleteGameById = (req, res) => {
     })
 }
 
+// const deletePlayerCredentialsByUsername = (req, res) => {
+//     let sql = "DELETE FROM players WHERE username = ?"
+//     sql = mysql.format(sql, [ req.params.username ])
+
+//     pool.query(sql, (err, results) => {
+//         if (err) return handleSQLError(res, err)
+//         return res.json({ message: `Deleted ${results.affectedRows} user(s)` });
+//     })
+// }
+
 const deletePlayerByUsername = (req, res) => {
-    let sql = "DELETE FROM players WHERE username = ?"
-    sql = mysql.format(sql, [ req.params.username ])
+    console.log('trying to delete user')
+    let sql = "DELETE FROM playersCredentials WHERE username = ?"
+    sql = mysql.format(sql, [ req.body.username ])
 
     pool.query(sql, (err, results) => {
         if (err) return handleSQLError(res, err)
         return res.json({ message: `Deleted ${results.affectedRows} user(s)` });
     })
+    // deletePlayerCredentialsByUsername(req.body.username)
+
 }
+
+
 module.exports = {
     getAllPlayers,
     getPlayerById,

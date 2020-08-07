@@ -110,6 +110,23 @@ class PlayerPage extends React.Component {
         
     }
 
+    deletePlayerCredentials = (playerName) => {
+        console.log('time to delete ', playerName)
+        let cookieToken = Cookies.get('token')
+        // console.log(cookieToken)
+        const deletePlayerRequest = {
+            method: 'DELETE',
+            headers: { 'authorization': `bearer ${cookieToken}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                username: playerName
+            })
+        };
+        fetch('/players', deletePlayerRequest)
+            .then(response => response.json())
+            .then(data => console.log('deleting player: ', data.id));
+        
+    }
+
     render() {
         
         return (
@@ -140,7 +157,7 @@ class PlayerPage extends React.Component {
                             )}
                         </tbody>
                     </table>
-                    <button className="playerDelete">Delete Player Account</button>
+                    <button className="playerDelete" onClick={() => this.deletePlayerCredentials(this.state.player)}>Delete Player Account</button>
                 </div>
                 
                 <div id="id01" className="modal" style={{display: this.state.modalDisplay}}>

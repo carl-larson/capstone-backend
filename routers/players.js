@@ -19,6 +19,6 @@ router.put('/games/', playersController.updateGame)
 
 router.delete('/games/', playersController.deleteGameById)
 
-router.delete('/players/:username', playersController.deletePlayerByUsername)
+router.delete('/players/', playersController.deletePlayerByUsername)
 
 module.exports = router;
