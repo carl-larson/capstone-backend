@@ -5,11 +5,11 @@ body {
 .Header {
   background-color: rgb(39, 145, 39);
   justify-items: center;
-  height: 15vh;
+  height: 115px;
   width: 100vw;
   display: grid;
   grid-template-columns: 20% 60% 20%;
-  font-size: calc(10px + 2vmin);
+  font-size: 24px;
   color: white;
   margin-bottom: 5px;
   border-bottom: 6px solid rgb(119, 23, 23);

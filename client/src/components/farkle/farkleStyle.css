@@ -3,6 +3,7 @@
     grid-template-columns: 33% 34% 33%;
     height: 100%;
     width: 100%;
+    max-width: 1000px;
 
 }
 
