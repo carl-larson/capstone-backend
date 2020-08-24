@@ -68,7 +68,7 @@ class Farkle extends React.Component {
         this.allValidPoints = false;
         this.winner = null;
         // this.keptCount = 0;
-        this.combos = [{values:'123456', worth: 2850},{values: '11', worth: 100},{values: '55', worth: 50},{values: '1', worth: 100},{values: '5', worth: 50},
+        this.combos = [{values:'123456', worth: 2850},{values:'12345', worth: 1850}, {values:'23456', worth: 1850}, {values: '11', worth: 100},{values: '55', worth: 50},{values: '1', worth: 100},{values: '5', worth: 50},
         {values:'666666', worth: 1000},{values:'555555', worth: 1000},{values:'444444', worth: 1000},{values:'333333', worth: 1000},{values:'222222', worth: 1000},{values:'111111', worth: 3000},
         {values:'66666', worth: 1000},{values:'55555', worth: 1000},{values:'44444', worth: 1000},{values:'33333', worth: 1000},{values:'22222', worth: 1000},{values:'11111', worth: 2000},
         {values:'6666', worth: 400},{values:'5555', worth: 500},{values:'4444', worth: 600},{values:'3333', worth: 700},{values:'2222', worth: 800},{values:'1111', worth: 1100},

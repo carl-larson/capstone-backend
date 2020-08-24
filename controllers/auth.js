@@ -76,8 +76,11 @@ const login = (req, res) => {
                 //     msg: 'Login successful',
                 //     token
                 // })
-                res.redirect('/playerpage')
-                res.end()
+                setTimeout(() => {
+                    res.redirect('/playerpage')
+                }, 500)
+                
+                // res.end()
             })
     })
 }
